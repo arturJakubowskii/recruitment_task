@@ -1,17 +1,15 @@
 package io.getint.recruitment_task.model;
 
-public class Task {
+public class Ticket {
 
     private String projectKey;
     private String summary;
-    //private String issueType;
-   // private String description;
+    private String description;
 
-    public Task(String projectKey, String summary) {
+    public Ticket(String projectKey, String summary, String description) {
         this.projectKey = projectKey;
         this.summary = summary;
-       // this.issueType = issueType;
-        //this.description = description;
+        this.description = description;
     }
 
     public String getProjectKey() {
@@ -22,22 +20,17 @@ public class Task {
         return summary;
     }
 
-//    public String getIssueType() {
-//        return issueType;
-//    }
-//
-//
-//    public String getDescription() {
-//        return description;
-//    }
+
+    public String getDescription() {
+        return description;
+    }
 
     @Override
     public String toString() {
         return "Task{" +
                 "projectKey='" + projectKey + '\'' +
                 ", summary='" + summary + '\'' +
-                //", issueType='" + issueType + '\'' +
-                //", description='" + description + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

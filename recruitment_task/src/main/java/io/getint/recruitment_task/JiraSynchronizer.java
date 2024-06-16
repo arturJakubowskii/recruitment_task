@@ -2,7 +2,7 @@ package io.getint.recruitment_task;
 
 import io.getint.recruitment_task.config.ConfigurationLoader;
 import io.getint.recruitment_task.http.JiraApiClient;
-import io.getint.recruitment_task.model.Task;
+import io.getint.recruitment_task.model.Ticket;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class JiraSynchronizer {
      * - priority
      * Bonus points for syncing comments.
      */
-    public void moveTasksToOtherProject() throws Exception {
+    public void moveTasksToOtherProject() {
         ConfigurationLoader configLoader = new ConfigurationLoader();
         JiraApiClient jiraApiClient = new JiraApiClient(configLoader);
 
@@ -29,16 +29,11 @@ public class JiraSynchronizer {
         }
 
         try {
-            // Retrieve tasks from the source project
-            List<Task> tasks = jiraApiClient.getAllIssues(sourceProjectKey);
-            for (Task task  : tasks){
-                System.out.println(task.toString());
-            }
+            List<Ticket> tickets = jiraApiClient.getAllIssues(sourceProjectKey);
 
-            // Post tasks to the target project
-//            for (Task task : tasks) {
-//                jiraApiClient.createTask(task.getProjectKey(), task.getSummary());
-//            }
+            for (Ticket ticket : tickets) {
+                jiraApiClient.createTask(targetProjectKey, ticket.getSummary(), ticket.getDescription());
+            }
 
             System.out.println("Tasks migrated successfully.");
         } catch (Exception e) {
@@ -47,7 +42,7 @@ public class JiraSynchronizer {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         JiraSynchronizer synchronizer = new JiraSynchronizer();
         synchronizer.moveTasksToOtherProject();
     }
